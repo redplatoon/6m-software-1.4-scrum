@@ -73,3 +73,49 @@ class Permission{
 }
 
 // Add code here
+
+class Document extends Permission {
+
+    // private variables
+    #content = null;
+
+    // constructor
+    constructor(role, operation, content) {
+        super(role, operation);
+        this.#content = content;
+    }
+
+    // function
+    process() {
+        const isAllowed = this.check();
+        if (isAllowed) {
+            console.log("Allowed");
+        } else {
+            console.log("Blocked");
+        }
+    }
+}
+
+// Scenario 1
+const d1 = new Document(
+    Permission.RolesConst.EDITOR,
+    Permission.OperationsConst.UPDATE,
+    "Hello content"
+  );
+  d1.process(); // Output: "Allowed"
+  
+  // Scenario 2
+  const d2 = new Document(
+    Permission.RolesConst.READER,
+    Permission.OperationsConst.UPDATE,
+    "Hello content"
+  );
+  d2.process(); // Output: "Blocked"
+  
+  // Scenario 3
+  const d3 = new Document(
+    Permission.RolesConst.OWNER,
+    Permission.OperationsConst.DELETE,
+    "Hello content"
+  );
+  d3.process(); // Output: "Allowed"
